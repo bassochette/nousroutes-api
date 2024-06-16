@@ -1,4 +1,4 @@
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { pgMemDatasource } from './pg-mem-datasource';
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppModule } from '../../src/app.module';
@@ -15,6 +15,8 @@ export const getTestingApp = async (): Promise<INestApplication> => {
   const app = moduleFixture.createNestApplication();
 
   app.enableCors();
+  app.useGlobalPipes(new ValidationPipe());
+
   await app.init();
 
   return app;
