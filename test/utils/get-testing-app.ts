@@ -10,6 +10,7 @@ export const getTestingApp = async (): Promise<INestApplication> => {
   })
     .overrideProvider(DataSource)
     .useValue(pgMemDatasource())
+    // here is the place to add external mocks like API calls and such
     .compile();
 
   const app = moduleFixture.createNestApplication();

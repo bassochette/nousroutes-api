@@ -2,6 +2,7 @@ import { DataSource } from 'typeorm';
 import { DataType, newDb } from 'pg-mem';
 import { v4 } from 'uuid';
 
+// This datasource can be tedious to maintain but it's a really cool tool for integration testing (e2e in the style of the nestjs template)
 export const pgMemDatasource = async () => {
   const db = newDb({
     autoCreateForeignKeyIndices: true,
