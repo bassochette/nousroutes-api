@@ -12,7 +12,7 @@ const config = {
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
-  migrations: [__dirname + '/../**/*.migration.{ts,js}'],
+  migrations: [__dirname + '/../**/*-migrations.{ts,js}'],
   synchronize: false,
   autoLoadEntities: true,
 };

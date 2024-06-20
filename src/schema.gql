@@ -1,0 +1,51 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Moods {
+  culture: Int!
+  history: Int!
+  nature: Int!
+  party: Int!
+  relax: Int!
+}
+
+type Query {
+  travel: [Travel!]!
+  travelByUuid(uuid: String!): Travel!
+}
+
+type Travel {
+  """number of available seats"""
+  availableSeats: Int!
+
+  """travel creation date"""
+  createAt: DateTime!
+
+  """travel description"""
+  description: String!
+
+  """travel ending date"""
+  endingDate: DateTime!
+  moods: Moods!
+
+  """travel name"""
+  name: String!
+
+  """travel price in cents"""
+  price: Int!
+
+  """travel slug"""
+  slug: String!
+
+  """travel starting date"""
+  startingDate: DateTime!
+
+  """Travel unique UUID"""
+  uuid: String!
+}
