@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { appConfig } from './configurations/app.config';
 import { ConfigType } from '@nestjs/config';
 import helmet from 'helmet';
@@ -25,6 +25,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerCongig);
   SwaggerModule.setup('swagger', app, document);
 
-  await app.listen(config.port);
+  await app.listen(config.port, () => {
+    Logger.log(`⛵️API running on port ${config.port}`, 'main');
+  });
 }
 bootstrap();
