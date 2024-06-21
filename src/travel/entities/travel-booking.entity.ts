@@ -6,9 +6,10 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Field } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Travel } from './travel.entity';
 
+@ObjectType()
 @Entity()
 export class TravelBooking {
   @PrimaryGeneratedColumn('uuid')
@@ -22,6 +23,10 @@ export class TravelBooking {
   travel: Travel;
 
   @Column()
+  @Field(() => Int)
+  seats: number;
+
+  @Column()
   @Field(() => Boolean)
   confirmed: boolean;
 
@@ -32,6 +37,7 @@ export class TravelBooking {
   client: string;
 
   @CreateDateColumn()
+  @Field(() => Date)
   createdAt: Date;
 
   @UpdateDateColumn()

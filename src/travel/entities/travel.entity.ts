@@ -67,15 +67,13 @@ export class Travel {
     description: 'number of available seats',
   })
   get availableSeats() {
-    const booked = this.bookings.reduce((carry, item) => {
-      if (item.confirmed) {
-        return carry + 1;
-      }
-      const fifteenMinutesAgo = new Date(+new Date() - 15 * 60);
+    const fifteenMinutesAgo = new Date(+new Date() - 15 * 60);
 
-      if (item.createdAt > fifteenMinutesAgo) {
-        return carry + 1;
+    const booked = this.bookings.reduce((carry, item) => {
+      if (item.confirmed || item.createdAt > fifteenMinutesAgo) {
+        return carry + item.seats;
       }
+
       return carry;
     }, 0);
 

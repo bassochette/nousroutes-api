@@ -1,12 +1,12 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 import { travelSeeds } from './seeds/travels';
 
-export class Migrations1718894424083 implements MigrationInterface {
-  name = 'Migrations1718894424083';
+export class Initial1718948565626 implements MigrationInterface {
+  name = 'Initial1718948565626';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `CREATE TABLE "travel_booking" ("uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "confirmed" boolean NOT NULL, "client" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "travelUuid" uuid, CONSTRAINT "PK_43f2e2581834cc16e9259bedeff" PRIMARY KEY ("uuid"))`,
+      `CREATE TABLE "travel_booking" ("uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "seats" integer NOT NULL, "confirmed" boolean NOT NULL, "client" character varying NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "travelUuid" uuid, CONSTRAINT "PK_43f2e2581834cc16e9259bedeff" PRIMARY KEY ("uuid"))`,
     );
     await queryRunner.query(
       `CREATE TABLE "travel" ("uuid" uuid NOT NULL DEFAULT uuid_generate_v4(), "slug" character varying NOT NULL, "name" character varying NOT NULL, "description" character varying NOT NULL, "startingDate" TIMESTAMP NOT NULL, "endingDate" TIMESTAMP NOT NULL, "price" integer NOT NULL, "moods" text NOT NULL, "createAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "UQ_07a7b0c3f52ff8f1cf79e1f14a2" UNIQUE ("slug"), CONSTRAINT "PK_27aee889d4801812aa0c20dfdc3" PRIMARY KEY ("uuid"))`,
