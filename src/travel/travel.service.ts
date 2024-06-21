@@ -6,6 +6,9 @@ import { BookingReservationInput } from './dto/booking-reservation.input';
 import { TravelBooking } from './entities/travel-booking.entity';
 import { NotEnoughSeatsException } from './exceptions/not-enough-seats.exception';
 import { TravelNotFoundException } from './exceptions/travel-not-found.exception';
+import { BookingConfirmationInput } from './dto/booking-confirmation.input';
+import { BookingExpiredException } from './exceptions/booking-expired.exception';
+import { BookingNotFoundException } from './exceptions/booking-not-found.exception';
 
 @Injectable()
 export class TravelService {
@@ -45,6 +48,37 @@ export class TravelService {
       seats: bookingReservationInput.seats,
       client: bookingReservationInput.email,
     });
+
+    await this.travelBookingRepository.save(booking);
+
+    return booking;
+  }
+
+  async bookingConfirmation(
+    bookingConfirmationInput: BookingConfirmationInput,
+  ): Promise<TravelBooking> {
+    const booking = await this.travelBookingRepository.findOne({
+      where: {
+        uuid: bookingConfirmationInput.bookingUuid,
+      },
+      relations: ['travel'],
+    });
+
+    if (!booking) {
+      throw new BookingNotFoundException(bookingConfirmationInput.bookingUuid);
+    }
+
+    const fifteenMinutesAgo = new Date();
+    fifteenMinutesAgo.setHours(
+      fifteenMinutesAgo.getHours(),
+      fifteenMinutesAgo.getMinutes() - 15,
+    );
+
+    if (booking.createdAt < fifteenMinutesAgo) {
+      throw new BookingExpiredException(booking.uuid);
+    }
+
+    booking.confirmed = true;
 
     await this.travelBookingRepository.save(booking);
 

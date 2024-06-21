@@ -3,6 +3,7 @@ import { TravelService } from './travel.service';
 import { Travel } from './entities/travel.entity';
 import { BookingReservationInput } from './dto/booking-reservation.input';
 import { TravelBooking } from './entities/travel-booking.entity';
+import { BookingConfirmationInput } from './dto/booking-confirmation.input';
 
 @Resolver(() => Travel)
 export class TravelResolver {
@@ -26,5 +27,11 @@ export class TravelResolver {
     return this.travelService.bookingReservation(bookingReservationInput);
   }
 
-  // TODO mutation book confirmation
+  @Mutation(() => TravelBooking)
+  bookingConfirmation(
+    @Args('bookingConfirmationInput')
+    bookingConfirmationInput: BookingConfirmationInput,
+  ) {
+    return this.travelService.bookingConfirmation(bookingConfirmationInput);
+  }
 }

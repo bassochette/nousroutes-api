@@ -2,6 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input BookingConfirmationInput {
+  """booking uuid"""
+  bookingUuid: String!
+}
+
 input BookingReservationInput {
   """email used for reservation"""
   email: String!
@@ -27,6 +32,7 @@ type Moods {
 }
 
 type Mutation {
+  bookingConfirmation(bookingConfirmationInput: BookingConfirmationInput!): TravelBooking!
   bookingReservation(bookingReservationInput: BookingReservationInput!): TravelBooking!
 }
 

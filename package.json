@@ -78,11 +78,20 @@
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "<rootDir>/src/main.ts",
+      ".mock.ts",
+      ".dto.ts",
+      ".type.ts",
+      "<rootDir>/src/migrations/*",
+      "<rootDir>/dist"
+    ]
   },
   "lint-staged": {
     "*.ts": "eslint --cache --fix"
