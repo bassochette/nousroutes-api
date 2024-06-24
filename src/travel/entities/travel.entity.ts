@@ -7,8 +7,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { TravelBooking } from './travel-booking.entity';
+import { TravelBooking } from '../booking/enitities/travel-booking.entity';
 import { Moods } from './moods.gql-object-type';
+import { getFifteenMinutesAgo } from '../../utils/fifteen-minutes-ago';
 
 const TRAVEL_CAPACITY = 5;
 
@@ -67,11 +68,7 @@ export class Travel {
     description: 'number of available seats',
   })
   get availableSeats() {
-    const fifteenMinutesAgo = new Date();
-    fifteenMinutesAgo.setHours(
-      fifteenMinutesAgo.getHours(),
-      fifteenMinutesAgo.getMinutes() - 15,
-    );
+    const fifteenMinutesAgo = getFifteenMinutesAgo();
 
     const booked = this.bookings.reduce((carry, item) => {
       if (item.confirmed || +item.createdAt > +fifteenMinutesAgo) {

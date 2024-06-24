@@ -4,9 +4,9 @@ import { getTestingApp } from './utils/get-testing-app';
 import { Repository } from 'typeorm';
 import { Travel } from '../src/travel/entities/travel.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { TravelBooking } from '../src/travel/entities/travel-booking.entity';
+import { TravelBooking } from '../src/travel/booking/enitities/travel-booking.entity';
 
-describe('TravelResolver (e2e)', () => {
+describe('gql (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
