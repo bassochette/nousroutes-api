@@ -13,6 +13,11 @@ export class BookingResolver {
     return this.bookingService.getBookingByUuid(uuid);
   }
 
+  @Query(() => [TravelBooking], { name: 'bookingsByEmail' })
+  getBookingsByEmail(@Args('email', { type: () => String }) email: string) {
+    return this.bookingService.getBookingByEmail(email);
+  }
+
   @Mutation(() => TravelBooking)
   bookingReservation(
     @Args('bookingReservationInput')

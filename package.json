@@ -1,8 +1,12 @@
 {
-  "name": "weroad-api",
+  "name": "nousroutes-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Technical case Julien Prugne",
+  "author": {
+    "email": "julien@webeleon.dev",
+    "name": "Julien Prugne",
+    "url": "https://webeleon.dev"
+  },
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -35,6 +39,7 @@
     "@nestjs/typeorm": "^10.0.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "date-fns": "^3.6.0",
     "graphql": "^16.8.2",
     "helmet": "^7.1.0",
     "pg": "^8.12.0",

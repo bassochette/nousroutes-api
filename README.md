@@ -1,3 +1,27 @@
+# NousRoutes API
+
+## requirements
+
+- node 20+
+- a postgres database
+
+## setup
+
+- create the database
+- copy `.env.template` to `.env` and fill the values (frontend is listening for port 5000)
+- run migration `npm run migration:run`
+- start the app in dev mode: `npm run start:dev`
+- start the app in production mode: `npm run start`
+
+## improvements:
+
+- better type validation on the graphql resolver
+- CI/CD pipeline based on your providers (gihub/gitlab + hosting)
+- real E2E test scheduled daily on the deployed API
+- moods to a real table to allow more flexibility
+- remove seed from migration and create a real seed script
+
+
 # Full stack Typescript hiring test
 
 ## Use case

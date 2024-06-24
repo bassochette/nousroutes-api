@@ -8,6 +8,7 @@ import { Repository } from 'typeorm';
 import { NotEnoughSeatsException } from '../exceptions/not-enough-seats.exception';
 import { TravelNotFoundException } from '../exceptions/travel-not-found.exception';
 import { BookingExpiredException } from './exceptions/booking-expired.exception';
+import { getFifteenMinutesAgo } from '../../utils/fifteen-minutes-ago';
 
 describe('BookingService', () => {
   let bookingService: BookingService;
@@ -169,5 +170,49 @@ describe('BookingService', () => {
         }),
       ).rejects.toThrowError(BookingExpiredException);
     });
+  });
+
+  it('return non expired bookings by email', async () => {
+    const bookings = [
+      // expired and confirmed
+      travelBookingRepository.create({
+        travel: travels[0],
+        seats: 1,
+        confirmed: true,
+        client: 'julien@webeleon.dev',
+        createdAt: getFifteenMinutesAgo(),
+      }),
+      // waiting for payment
+      travelBookingRepository.create({
+        travel: travels[1],
+        seats: 2,
+        confirmed: false,
+        client: 'julien@webeleon.dev',
+        createdAt: new Date(),
+      }),
+      // shoud not displau
+      travelBookingRepository.create({
+        travel: travels[0],
+        seats: 1,
+        confirmed: false,
+        client: 'julien@webeleon.dev',
+        createdAt: getFifteenMinutesAgo(),
+      }),
+      // should not display
+      travelBookingRepository.create({
+        travel: travels[0],
+        seats: 1,
+        confirmed: false,
+        client: 'anneb@webeleon.dev',
+        createdAt: new Date(),
+      }),
+    ];
+
+    await travelBookingRepository.save(bookings);
+
+    const foundBookings = await bookingService.getBookingByEmail(
+      'julien@webeleon.dev',
+    );
+    expect(foundBookings.length).toBe(2);
   });
 });

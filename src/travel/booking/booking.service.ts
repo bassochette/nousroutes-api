@@ -10,6 +10,7 @@ import { BookingNotFoundException } from './exceptions/booking-not-found.excepti
 import { getFifteenMinutesAgo } from '../../utils/fifteen-minutes-ago';
 import { BookingExpiredException } from './exceptions/booking-expired.exception';
 import { TravelService } from '../travel.service';
+import { MoreThan } from 'typeorm';
 
 @Injectable()
 export class BookingService {
@@ -24,6 +25,22 @@ export class BookingService {
       where: {
         uuid,
       },
+      relations: ['travel'],
+    });
+  }
+
+  getBookingByEmail(email: string) {
+    return this.travelBookingRepository.find({
+      where: [
+        {
+          client: email,
+          confirmed: true,
+        },
+        {
+          client: email,
+          createdAt: MoreThan(getFifteenMinutesAgo()),
+        },
+      ],
       relations: ['travel'],
     });
   }

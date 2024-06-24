@@ -38,6 +38,7 @@ type Mutation {
 
 type Query {
   bookingByUuid(uuid: String!): TravelBooking!
+  bookingsByEmail(email: String!): [TravelBooking!]!
   travel: [Travel!]!
   travelBySlug(slug: String!): Travel!
 }
