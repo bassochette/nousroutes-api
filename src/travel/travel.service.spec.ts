@@ -35,7 +35,7 @@ describe('travel service', () => {
   it('should return a travel by uuid', async () => {
     const travels = await travelService.findAll();
 
-    const firstTravel = await travelService.findOne(travels[0].uuid);
+    const firstTravel = await travelService.findOneByUuid(travels[0].uuid);
 
     expect(firstTravel).toStrictEqual(travels[0]);
   });
@@ -62,7 +62,9 @@ describe('travel service', () => {
         confirmed: false,
       });
 
-      const travelWithReservation = await travelService.findOne(travel.uuid);
+      const travelWithReservation = await travelService.findOneByUuid(
+        travel.uuid,
+      );
       expect(travelWithReservation.availableSeats).toBe(2);
     });
 
@@ -93,7 +95,7 @@ describe('travel service', () => {
         travelUuid: travel.uuid,
       });
 
-      const travelAfterBooking = await travelService.findOne(travel.uuid);
+      const travelAfterBooking = await travelService.findOneByUuid(travel.uuid);
       expect(travelAfterBooking.availableSeats).toBe(2);
 
       const fifteenMinutesAgo = new Date();
@@ -104,9 +106,8 @@ describe('travel service', () => {
       booking.createdAt = fifteenMinutesAgo;
       await travelBookingRepo.save(booking);
 
-      const travelFifteenMinutesAfterBooking = await travelService.findOne(
-        travel.uuid,
-      );
+      const travelFifteenMinutesAfterBooking =
+        await travelService.findOneByUuid(travel.uuid);
       expect(travelFifteenMinutesAfterBooking.availableSeats).toBe(5);
     });
   });
@@ -137,7 +138,7 @@ describe('travel service', () => {
       bookingConfirmed.createdAt = oneHourAgo;
       await travelBookingRepo.save(bookingConfirmed);
 
-      const travelOneHourAfterBooking = await travelService.findOne(
+      const travelOneHourAfterBooking = await travelService.findOneByUuid(
         travel.uuid,
       );
       expect(travelOneHourAfterBooking.availableSeats).toBe(2);

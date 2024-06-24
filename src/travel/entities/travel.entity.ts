@@ -67,19 +67,23 @@ export class Travel {
     description: 'number of available seats',
   })
   get availableSeats() {
-    const fifteenMinutesAgo = new Date(+new Date() - 15 * 60);
+    const fifteenMinutesAgo = new Date();
+    fifteenMinutesAgo.setHours(
+      fifteenMinutesAgo.getHours(),
+      fifteenMinutesAgo.getMinutes() - 15,
+    );
 
     const booked = this.bookings.reduce((carry, item) => {
-      if (item.confirmed || item.createdAt > fifteenMinutesAgo) {
+      if (item.confirmed || +item.createdAt > +fifteenMinutesAgo) {
         return carry + item.seats;
       }
 
       return carry;
     }, 0);
-
     return TRAVEL_CAPACITY - booked;
   }
 
+  // Quick solution, in real life a OneToMany relation would be better and allow to use as many moods as wanted
   @Column({
     type: 'simple-json',
   })

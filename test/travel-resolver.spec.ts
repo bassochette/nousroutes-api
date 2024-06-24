@@ -81,6 +81,27 @@ describe('TravelResolver (e2e)', () => {
       expect(body.data.bookingReservation.uuid).toBeDefined();
       expect(body.data.bookingReservation.createdAt).toBeDefined();
       expect(body.data.bookingReservation.confirmed).toBe(false);
+
+      const travelResponse = await request(app.getHttpServer())
+        .post('/graphql')
+        .send({
+          query: `
+          {
+            travelBySlug(slug: "${travels[0].slug}") {
+              uuid,
+              name,
+              description,
+              availableSeats,
+              moods {
+                nature
+              }
+            }
+          }
+        `,
+        });
+
+      expect(travelResponse.status).toBe(200);
+      expect(travelResponse.body.data.travelBySlug.availableSeats).toBe(2);
     });
   });
 

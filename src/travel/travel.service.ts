@@ -23,7 +23,7 @@ export class TravelService {
     return this.travelRepository.find({});
   }
 
-  findOne(uuid: string) {
+  findOneByUuid(uuid: string) {
     return this.travelRepository.findOne({
       where: {
         uuid,
@@ -31,8 +31,16 @@ export class TravelService {
     });
   }
 
+  findOneBySlug(slug: string) {
+    return this.travelRepository.findOne({
+      where: {
+        slug,
+      },
+    });
+  }
+
   async bookingReservation(bookingReservationInput: BookingReservationInput) {
-    const travel = await this.findOne(bookingReservationInput.travelUuid);
+    const travel = await this.findOneByUuid(bookingReservationInput.travelUuid);
 
     if (!travel) {
       throw new TravelNotFoundException(bookingReservationInput.travelUuid);

@@ -38,7 +38,7 @@ type Mutation {
 
 type Query {
   travel: [Travel!]!
-  travelByUuid(uuid: String!): Travel!
+  travelBySlug(slug: String!): Travel!
 }
 
 type Travel {

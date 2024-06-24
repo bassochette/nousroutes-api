@@ -14,9 +14,9 @@ export class TravelResolver {
     return this.travelService.findAll();
   }
 
-  @Query(() => Travel, { name: 'travelByUuid' })
-  findOne(@Args('uuid', { type: () => String }) uuid: string) {
-    return this.travelService.findOne(uuid);
+  @Query(() => Travel, { name: 'travelBySlug' })
+  findOne(@Args('slug', { type: () => String }) slug: string) {
+    return this.travelService.findOneBySlug(slug);
   }
 
   @Mutation(() => TravelBooking)
